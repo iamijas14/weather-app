@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- font-awesome -->
+    <link 
+        rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" 
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" 
+        crossorigin="anonymous" 
+        referrerpolicy="no-referrer" 
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <!-- <script src="weather.js"></script> -->
+    <title>Weather App</title>
+
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .box{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color:antiquewhite;
+            border-radius: 15px;
+            width: 200px;
+            height: 100%;
+            padding: 20px;
+            margin: auto; 
+            position: relative;
+            top: 100px
+        }
+
+        #weather_icon {
+            font-size: 80px;
+        }
+
+        .weather_info > p, .temp, .location {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div id="weather_icon">
+            <i class="fa-solid fa-sun" style="color: #eccc68"></i>
+        </div>
+
+        <div class="weather_info">
+            <h2 class="location"><i class="fa-solid fa-street-view"></i>{%state%}, {%country%}</h2>
+            <p id="date">THU | NOV 17 | 1:20PM</p>
+            <h1 class="temp">{%temp%}°C</h1>
+            <p class="temp_min_max">Min {%tempMin%}°C | Max {%tempMax%}°C </p>
+        </div>
+    </div>
+</body>
+
+<script>
+    const curDate = document.getElementById("date");
+    const weatherIcon = document.getElementById("weather_icon");
+
+    const tempStatus = '{%tempStatus%}';
+    
+    if(tempStatus == 'Sunny') {
+        weatherIcon.innerHTML = "<i class='fa-solid fa-sun' style='color: #eccc68'></i>"
+    } else if(tempStatus == 'Clouds') {
+        weatherIcon.innerHTML = "<i class='fa-solid fa-cloud' style='color: #f1f2f6'></i>"
+    }
+    else if(tempStatus == 'Rainy') {
+        weatherIcon.innerHTML = "<i class='fa-solid fa-raindrops' style='color: #a4b0be'></i>"
+    }
+    else {
+        weatherIcon.innerHTML = "<i class='fa-solid fa-sun' style='color: #eccc68'></i>"
+    }
+
+    const getCurrentDay = () => {
+
+            const dayName = [
+                'Sun',
+                'Mon',
+                'Tue',
+                'Wed',
+                'Thu',
+                'Fri',
+                'Sat', 
+            ]
+
+        let currentDay = new Date();
+        let day = dayName[currentDay.getDay()];
+
+        return day;
+    };
+
+    const getCurrentDate = () => {
+        const months = [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jly',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec'
+        ];
+
+        let now = new Date();
+        let month = months[now.getMonth()];
+        let date = now.getDate();
+        let hours = now.getHours();
+        let mins = now.getMinutes();
+
+        let periods = 'AM';
+
+        if(hours > 11) {
+            periods = 'PM';
+            if(hours > 12) hours -= 12;
+        }
+
+        if(mins < 10) mins = '0' + mins
+
+        return `${month.toUpperCase()} ${date} | ${hours}:${mins}${periods}`
+    };
+
+    curDate.innerHTML = `${getCurrentDay().toUpperCase()} | ${getCurrentDate()}`;
+</script>
+
+</html>
+
