@@ -24,7 +24,7 @@ const replaceItem = (tempVal, orgVal) => {
 
 const server = http.createServer((req, res) => {
     if(req.url == '/'){
-        requests('https://api.openweathermap.org/data/2.5/weather?q=bangalore&appid=e9571887ae589378b53e0d3fcf658d92&units=metric')
+        requests('https://api.openweathermap.org/data/2.5/weather?q=bangalore&appid=your-token-ID')
         .on('data', (chunk) => {
             const weatherReport = JSON.parse(chunk);
             const arrData = [weatherReport];
